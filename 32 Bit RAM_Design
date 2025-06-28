@@ -1,0 +1,16 @@
+module ram_32x25 (
+    input logic clk,
+    input logic we,                // Write Enable
+    input logic [7:0] addr,        // 8-bit address: 2^8 = 256 locations
+    input logic [31:0] din,        // 32-bit data input
+    output logic [31:0] dout       // 32-bit data output
+);
+    logic [31:0] mem [0:255];      // Memory array
+
+    always_ff @(posedge clk) begin
+        if (we)
+            mem[addr] <= din;      // Write operation
+        else
+            dout <= mem[addr];     // Read operation
+    end
+endmodule
